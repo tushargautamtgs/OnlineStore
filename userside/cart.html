@@ -7,110 +7,225 @@
 
     <!-- styling  -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-        :root {
-          --bg-glass: rgba(255, 255, 255, 0.12);
-          --glass-blur: blur(25px);
-          --btn-gradient: linear-gradient(to right, #ff6b81, #ff4757);
-          --text-light: #f7e7e7;
-          --shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
-          --navbar-bg: rgba(255, 255, 255, 0.08);
-          --glow-neon: rgba(255, 75, 75, 0.7);
-        }
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #e7c1c1;
-            margin: 0;
-            padding: 0;
-            color: var(--text-dark);
-        }
+/* global variables */
+:root {
+  --bg-glass: rgba(255, 255, 255, 0.12);
+  --glass-blur: blur(25px);
+  --btn-gradient: linear-gradient(to right, #ff6b81, #ff4757);
+  --text-light: #f7e7e7;
+  --text-dark: #111; /* ✅ added proper dark text variable */
+  --shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
+  --navbar-bg: rgba(255, 255, 255, 0.08);
+  --glow-neon: rgba(255, 75, 75, 0.7);
+}
 
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: var(--navbar-bg);
-            backdrop-filter: var(--glass-blur);
-            box-shadow: var(--shadow);
-            padding: 15px 40px;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #e7c1c1;
+  margin: 0;
+  padding: 0;
+  color: var(--text-dark);
+}
 
-        .navbar h1 {
-            font-size: 22px;
-            font-weight: 600;
-            margin:  5px 0;
-        }
+/* navbar */
+.navbar {
+  position: fixed;
+  top: 0; /* ✅ was 10px, now perfectly top */
+  left: 0;
+  right: 0;
+  background: var(--navbar-bg);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow);
+  padding: 15px 40px;
+  z-index: 1000; /* ✅ higher to stay on top */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
-        .nav-links{
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin:  5px 0;
-        }
+.navbar h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 5px 0;
+}
 
-        .nav-links a {
-            color: var(---text-darkt);
-            text-decoration: none;
-            font-weight: 500;
-            transition:  opacity 0.3s ease-in-out;
-            white-space: nowrap;
-            font-size: 16px;
-        }
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 5px 0;
+}
 
-        .nav-links a:hover {
-            opacity: 0.7;
-        }
+.nav-links a {
+  color: var(--text-dark); /* ✅ fixed */
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.3s ease-in-out;
+  white-space: nowrap;
+  font-size: 16px;
+}
 
-        .cart-container {
-            margin-top: 80px;
-            padding: 20px 50px;
-        }
+.nav-links a:hover {
+  opacity: 0.7;
+}
 
-        .cart-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
+/* cart section */
+.cart-container {
+  margin-top: 80px;
+  padding: 20px 50px;
+}
 
-        .cart-item img {
-            width: 100px;
-            height: 100px;
-            border-radius: 12px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .cart-item img:hover {
-            transform: scale(1.5);
-            box-shadow: 0 0 25px var(--glow-neon);
-        }
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-        .cart-item-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        /* quantity selector */
+.cart-item img {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  transition: transform 0.3s ease-in-out;
+}
+.cart-item img:hover {
+  transform: scale(1.5);
+  box-shadow: 0 0 25px var(--glow-neon);
+}
 
-        .quantity-select {
-            width: 60px;
-            padding: 5px;
-            border-radius: 8px;
-            border: 1px solid rgba(118, 39, 39, 0.3);
-            background: var(--bg-glass);
-            color: var(--text-dark);
-            backdrop-filter: var(--glass-blur);
-            font-size: 14px;
-        }
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* quantity selector */
+.quantity-select {
+  padding: 6px;
+  border-radius: 6px;
+  background: var(--bg-glass);
+  border: 1px solid rgba(16, 2, 2, 0.3);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+  max-width: 80px;
+}
+
+.quantity-select:hover {
+  background: var(--bg-glass);
+  color: #150202;
+  border: none;
+  box-shadow: 0 0 15px var(--glow-neon);
+}
+
+/* buttons */
+.btn-group {
+  display: flex;
+  gap: 12px;
+}
+
+.customize-btn,
+.remove-btn {
+  background: var(--bg-glass);
+  color: rgb(66, 20, 20);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 0px 8px var(--glow-neon);
+  white-space: nowrap;
+}
+
+.customize-btn:hover,
+.remove-btn:hover {
+  transform: scale(1.1);
+  background: #deaeb2;
+  color: #150202;
+  box-shadow: 0px 0px 12px var(--glow-neon);
+}
+
+/* Subtotal Bar */
+.subtotal-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 50px;
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow);
+  margin: 20px 50px 0;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.subtotal-bar .subtotal {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.subtotal-bar .promo-code {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.subtotal-bar .promo-code input {
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+.subtotal-bar .promo-code button {
+  background: var(--btn-gradient);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.subtotal-bar .promo-code button:hover {
+  transform: scale(1.05);
+}
+
+/* Place Order Button */
+.place-order-container {
+  padding: 20px 50px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+        .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-img {
+    height: 40px;      /* Adjust navbar size ke according */
+    width: 40px;       /* Round image ke liye width = height */
+    object-fit: cover; /* Image crop/fit properly */
+    border-radius: 50%; /* Makes it circular */
+    border: 2px solid #ccc; /* Optional: thoda border */
+}
+
+
 
 
 
@@ -130,6 +245,7 @@
                 <a href="index.html">Home</a>
                 <a href="index.html">Shop</a>
                 <a href="track.html">Track</a>
+            </div>
         </div>
     </body>
 
