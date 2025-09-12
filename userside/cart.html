@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <style>
+
+    </style>
+    <head>
+
+    </head>
+    <body>
+        <!-- Navbar -->
+
+        <div class="navbar">
+            <div class="logo-container">
+                <img src="logo.JPG" alt="VenuResinCreation Logo" class="logo-img"/>
+                <span class="logo-text">VenuResinCreation</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html">Shop</a>
+                <a href="track.html">Track</a>
+        </div>
+    </body>
+
+    <!-- cart items -->
+
+    <div class="cart-container" id="cart-items"></div>
+
+    <div class="subtotal-bar">
+        <div class="subtotal" id="subtotal">Subtotal: Rs 0.00</div>
+        <div class="promo-code">
+            <input type="text" id="promoInput" placeholder="Enter Promo Code"/>
+            <button onclick="applyPromoCode()">Apply</button>
+        </div>
+    </div>
+
+    <!-- Place order button  -->
+
+    <div class="place-order-container">
+        <button class="place-order-btn">Place Order</button>
+    </div>
+
+    <!-- Custmization req for order  -->
+
+    <div class="modal" id="customizeModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2>Customize Porduct</h2>
+            <label for="customText">Enter Custmization Details</label>
+            <textarea id="customText" rows="4" placeholder="e.g.. preferred colors, text to be engraved, etc."></textarea>
+            <button onclick="saveCustomization()">Save</button>
+            </div>
+    </div>
+
+    <!-- Order Modal  -->
+
+    

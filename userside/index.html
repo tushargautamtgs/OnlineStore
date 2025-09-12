@@ -27,7 +27,7 @@
     <!-- Hamburger -->
     <div class="right-side">
         <div class="cart-container">
-            <a href="user.html" class="cart-icon">
+            <a href="cart.html" class="cart-icon">
                 🛍️ <strong>Cart</strong>
                 <span id="cart-count" class="cart-count-badge">0</span>
             </a>
@@ -86,32 +86,6 @@
     <p class="footer-text">&copy; 2025 <span class="brand">Venuresincreation</span>. All Rights Reserved.</p>
     <p><a href="contact.html" class="contact-link">Contact Us</a></p>
 </footer>
-
-<!-- Scripts -->
-<script>
-    // Show cart count on load
-    document.addEventListener('DOMContentLoaded', function () {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-        const countEl = document.getElementById('cart-count');
-        if (countEl) {
-            countEl.textContent = count;
-            if (count > 0) {
-                countEl.style.display = 'inline-block';
-            } else {
-                countEl.style.display = 'none';
-            }
-        }
-    });
-function toggleMenu() {
-  const nav = document.querySelector('.nav-links');
-  const hamburger = document.querySelector('.hamburger');
-  nav.classList.toggle('active');
-  hamburger.classList.toggle('active');
-}
-
-
-</script>
 
 <script src="script.js"></script>
 <div id="toast"></div>

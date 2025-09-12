@@ -131,3 +131,24 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
     updateCartCount();
 });
+
+    // Show cart count on load
+    document.addEventListener('DOMContentLoaded', function () {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const countEl = document.getElementById('cart-count');
+        if (countEl) {
+            countEl.textContent = count;
+            if (count > 0) {
+                countEl.style.display = 'inline-block';
+            } else {
+                countEl.style.display = 'none';
+            }
+        }
+    });
+function toggleMenu() {
+  const nav = document.querySelector('.nav-links');
+  const hamburger = document.querySelector('.hamburger');
+  nav.classList.toggle('active');
+  hamburger.classList.toggle('active');
+}
