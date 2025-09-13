@@ -306,6 +306,45 @@
         border-radius: 50%; /* Makes it circular */
         border: 2px solid #ccc; /* Optional: thoda border */
       }
+
+      /* toast  */
+      .custom-toast {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.1); /* transparent glass effect */
+        backdrop-filter: blur(10px);
+        color: white;
+        font-weight: bold;
+        padding: 12px 24px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.8),
+          0 0 20px rgba(255, 255, 255, 0.3); /* glitter effect */
+        z-index: 999;
+        font-size: 16px;
+        animation: fadeInOut 3s ease forwards;
+        text-align: center;
+      }
+
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(30px);
+        }
+        10% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0px);
+        }
+        90% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0px);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) translateY(30px);
+        }
+      }
     </style>
   </head>
   <body>
@@ -399,6 +438,5 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script src="cart.js"></script>
-
   </body>
 </html>
