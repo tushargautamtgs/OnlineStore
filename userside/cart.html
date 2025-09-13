@@ -237,12 +237,11 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0,0,0,0.6);
+        background: rgba(0, 0, 0, 0.6);
         z-index: 200;
         justify-content: center;
         align-items: center;
         padding: 20px;
-      
       }
       .modal-content {
         background: var(--btn-gradient);
@@ -260,7 +259,7 @@
         margin-top: 0;
       }
 
-      .modal-content label{
+      .modal-content label {
         display: block;
         margin: 10px 0 5px;
       }
@@ -270,13 +269,13 @@
         width: 80%;
         padding: 7px;
         border-radius: 5px;
-        border: 1px solid rgba(255,255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         background: rgba(231, 193, 210, 0.765);
         color: var(--text-dark);
         font-size: 14px;
       }
 
-      .modal-content button{
+      .modal-content button {
         background: var(--navbar-bg);
         /* color: wh; */
         border: none;
@@ -290,14 +289,15 @@
       }
 
       .modal-content button :hover {
-        transform : scale(1.05);
+        transform: scale(1.05);
       }
 
       .close-modal {
         float: right;
         font-size: 18px;
         cursor: pointer;
-        color: var(--text-dark);}
+        color: var(--text-dark);
+      }
 
       .logo-img {
         height: 40px; /* Adjust navbar size ke according */
@@ -307,22 +307,21 @@
         border: 2px solid #ccc; /* Optional: thoda border */
       }
     </style>
-    <head> </head>
-    <body>
-      <!-- Navbar -->
+  </head>
+  <body>
+    <!-- Navbar -->
 
-      <div class="navbar">
-        <div class="logo-container">
-          <img src="logo.JPG" alt="VenuResinCreation Logo" class="logo-img" />
-          <span class="logo-text">VenuResinCreation</span>
-        </div>
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="index.html">Shop</a>
-          <a href="track.html">Track</a>
-        </div>
+    <div class="navbar">
+      <div class="logo-container">
+        <img src="logo.JPG" alt="VenuResinCreation Logo" class="logo-img" />
+        <span class="logo-text">VenuResinCreation</span>
       </div>
-    </body>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html">Shop</a>
+        <a href="track.html">Track</a>
+      </div>
+    </div>
 
     <!-- cart items -->
 
@@ -399,197 +398,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-    <script>
-      // firebase configs
+    <script src="cart.js"></script>
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyA0StbmF9z2kK4WMEOpG9qO9XwlAfd",
-        authDomain: "ecommerce-492b2.firebaseapp.com",
-        databaseURL: "https://resinecomsite-b81db-default-rtdb.firebaseio.com/",
-        projectId: "ecommerce-492b2",
-        storageBucket: "ecommerce-492b2.appspot.com",
-        messagingSenderId: "973139470429",
-        appId: "1:973139470429:web:0c1915e57edfd72e6b0cb1",
-      };
-
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
-
-      const db = firebase.database();
-
-      let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-      let currentCustomizeIndex = null;
-
-      function renderCart() {
-        const cartContainer = document.getElementById("cart-items");
-        cartContainer.innerHTML = "";
-        cartItems.forEach((item, index) => {
-          cartContainer.innerHTML += `
-          <div class="cart-item">
-            <img src="${item.image}" alt="${item.name}">
-            <div class="cart-item-info">
-              <h4>${item.name}</h4>
-              <p>RS ${item.price.toFixed(2)}</p>
-              <select class="quantity-select" onchange="updateQuantity(${index}, this.value)">
-                ${[...Array(10)]
-                  .map(
-                    (_, i) =>
-                      `<option value="${i + 1}" ${
-                        item.quantity === i + 1 ? "selected" : ""
-                      }>${i + 1}</option>`
-                  )
-                  .join("")}
-              </select>
-              ${
-                item.customization
-                  ? `<p><em>Customization:</em> ${item.customization}</p>`
-                  : ""
-              }
-            </div>
-            <div class="btn-group">
-              <button class="customize-btn" onclick="openModal(${index})">Customize</button>
-              <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-            </div>
-          </div>`;
-        });
-        updateSubtotal();
-      }
-
-      function updateQuantity(index, value) {
-        cartItems[index].quantity = parseInt(value);
-        localStorage.setItem("cart", JSON.stringify(cartItems));
-        renderCart();
-      }
-
-      function removeItem(index) {
-        cartItems.splice(index, 1);
-        localStorage.setItem("cart", JSON.stringify(cartItems));
-        renderCart();
-      }
-
-      function updateSubtotal() {
-        let subtotal = 0;
-        cartItems.forEach((item) => {
-          subtotal += item.price * item.quantity;
-        });
-        document.getElementById("subtotal").innerText =
-          "Subtotal: RS " + subtotal.toFixed(2);
-      }
-
-      function openModal(index) {
-        currentCustomizeIndex = index;
-        document.getElementById("customText").value =
-          cartItems[index]?.customization || "";
-        document.getElementById("customizeModal").style.display = "flex";
-      }
-
-      function closeModal() {
-        document.getElementById("customizeModal").style.display = "none";
-        currentCustomizeIndex = null;
-      }
-
-      function saveCustomization() {
-        const customText = document.getElementById("customText").value;
-        if (
-          currentCustomizeIndex !== null &&
-          cartItems[currentCustomizeIndex]
-        ) {
-          cartItems[currentCustomizeIndex].customization = customText;
-          localStorage.setItem("cart", JSON.stringify(cartItems));
-          closeModal();
-          renderCart();
-        }
-      }
-
-      function applyPromo() {
-        const promo = document.getElementById("promoInput").value;
-        if (promo) {
-          alert("Promocode applied: " + promo);
-        }
-      }
-
-      document
-        .querySelector(".place-order-btn")
-        .addEventListener("click", () => {
-          document.getElementById("orderModal").style.display = "flex";
-        });
-
-      function closeOrderModal() {
-        document.getElementById("orderModal").style.display = "none";
-      }
-
-      function submitOrder() {
-        const name = document.getElementById("orderName").value.trim();
-        const phone = document.getElementById("orderPhone").value.trim();
-        const address = document.getElementById("orderAddress").value.trim();
-        const landmark = document.getElementById("orderLandmark").value.trim();
-        const email = document.getElementById("orderEmail").value.trim();
-
-        const orderItems = cartItems.map((item) => ({
-          id: item.id || "no-id", // ✅ fallback de diya
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          customization: item.customization || "None",
-        }));
-
-        const totalAmount = orderItems.reduce(
-          (total, item) => total + item.price * item.quantity,
-          0
-        );
-        const timestamp = new Date().toISOString();
-        const orderId = `ORD-${Date.now()}`;
-
-        if (!name || !phone || !address || orderItems.length === 0) {
-          alert("Please fill all required fields and add at least one item.");
-          return;
-        }
-
-        const orderData = {
-          customer: {
-            name,
-            phone,
-            address,
-            landmark,
-            email,
-          },
-          items: orderItems,
-          orderId,
-          timestamp,
-          totalAmount,
-        };
-
-        db.ref("orders/" + orderId)
-          .set(orderData)
-          .then(() => {
-            <!--          alert("🎉 Order placed successfully!");-->
-            showToast("🎉 Order placed successfully!");
-
-            closeOrderModal();
-            localStorage.removeItem("cart");
-            cartItems = [];
-            renderCart();
-          })
-          .catch((error) => {
-            console.error("Error saving order:", error);
-            alert("❌ Failed to place order.");
-          });
-      }
-
-      function showToast(message) {
-        const toast = document.createElement("div");
-        toast.className = "custom-toast";
-        toast.innerText = message;
-
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-          toast.remove();
-        }, 3000); // Toast will auto remove after 3s
-      }
-
-      renderCart();
-    </script>
-  </head>
+  </body>
 </html>
