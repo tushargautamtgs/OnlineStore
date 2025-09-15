@@ -9,8 +9,6 @@
       rel="stylesheet"
     />
     <style>
-
-        /* Default Light Theme */
         :root {
           --bg-color: #f8f8f8;
           --card-color: #fff;
@@ -71,42 +69,307 @@
   align-items: center;
   width: 100%;
 }
-        </style>
+
+.nav-links li {
+  display: flex;
+  align-items: center;
+}
+
+/* Make the last li (dark mode button) push to far right */
+.nav-links li:last-child {
+  margin-left: auto;
+}
+
+.nav-links a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.toggle-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #ff7eb3, #ff758c);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255,118,140,0.5);
+}
+
+      /* track container  */
+
+      .main {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 30px 15px;
+      }
+
+      .track-container {
+        max-width: 520px;
+        background: var(--card-color);
+        border-radius: 25px;
+        padding: 35px 25px;
+        text-align: center;
+        box-shadow: 0 6px 18px rgba(178, 178, 61, 0.538);
+        transition: background 0.3s ease;
+      }
+
+      .track-container h2 {
+        margin-bottom: 20px;
+        font-size: 22px;
+        background: linear-gradient(45deg, #db8aac, #be6a78);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+       .track-container input {
+          width: 90%;
+          padding: 12px;
+          margin: 8px 0;
+          border-radius: 12px;
+          border: 2px solid #170303;
+          font-size: 15px;
+          background: var(--input-color);
+          color: var(--text-color);
+        }
+
+            .track-container button {
+          margin-top: 18px;
+          background: linear-gradient(90deg, #ff7eb3, #ff758c);
+          border: none; color: #fff;
+          padding: 12px 25px;
+          font-weight: 600;
+          border-radius: 30px;
+          cursor: pointer;
+          transition: 0.3s ease;
+          box-shadow: 0 4px 15px rgba(255,118,140,0.4);
+        }
+        .track-container button:hover {
+          transform: translateY(-2px) scale(1.05);
+        }
+
+                /* Results */
+        .order-result {
+          margin-top: 20px;
+          background: rgba(255,255,255,0.85);
+          padding: 18px;
+          border-radius: 12px;
+          text-align: left;
+          box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        body.dark .order-result {
+          background: rgba(50,50,70,0.9);
+          color: #fff;
+        }
+        .no-order { margin-top: 15px; color: red; font-weight: 500; }
+
+        /* Progress */
+        .progress-container { margin-top: 20px; }
+        .status-bar { display: flex; justify-content: space-between; position: relative; }
+        .status-bar::before {
+          content: ""; position: absolute; top: 50%;
+          left: 18px; right: 18px; height: 3px;
+          background: #ddd; z-index: 0;
+        }
+        body.dark .status-bar::before { background: #555; }
+        .status-step {
+          width: 38px; height: 38px; border-radius: 50%;
+          background: #eee; color: #333;
+          display: flex; align-items: center; justify-content: center;
+          font-weight: bold; z-index: 1;
+        }
+        body.dark .status-step { background: #444; color: #fff; }
+        .status-active {
+          background: linear-gradient(90deg, #ff7eb3, #ff758c);
+          color: #fff !important;
+          box-shadow: 0 0 12px rgba(255,118,140,0.6);
+        }
+        .status-labels {
+          display: flex; justify-content: space-between;
+          margin-top: 10px; font-size: 12px;
+        }
+
+        /* Loader */
+        .loader {
+          margin: 20px auto;
+          border: 4px solid #f3f3f3;
+          border-top: 4px solid #ff7eb3;
+          border-radius: 50%;
+          width: 34px; height: 34px;
+          animation: spin 1s linear infinite;
+          display: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* Footer sticky */
+        .footer {
+          background: var(--footer-bg);
+          color: var(--footer-text);
+          text-align: center;
+          padding: 18px;
+          font-size: 14px;
+          margin-top: auto;
+        }
+        .brand {
+          font-weight: bold;
+          background: linear-gradient(45deg, #ff7eb3, #ff758c);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .contact-link {
+          font-size: 15px;
+          font-weight: 600;
+          text-decoration: none;
+          color: inherit;
+          padding: 4px 10px;
+          border-radius: 8px;
+          transition: 0.3s;
+          display: inline-block;
+          margin-top: 8px;
+        }
+        .contact-link:hover {
+          background: linear-gradient(45deg, #ff7eb3, #ff758c);
+          color: white;
+        }
+    </style>
   </head>
-</html>
 <body>
-    <!-- //navbar -->
-     
-    <nav class="navbar">
-        <div class="logo.JPG">
-            <img src = "logo.JPG" alt="Logo" class="logo-img">
-            <span class="logo-text">Venuresincreation</span>
-        </div>
+  <!-- //navbar -->
 
-        <ul class="nav-links">
-            <li><a href="index.html">🏠 Home</a></li>
-        </ul>
-        <ul>
-            <button class="btn" onclick="toggleTheme()">🌙</button>
-        </ul>
-    </nav>
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="logo.jpg" alt="Logo" class="logo-img">
+        <span class="logo-text"><strong>Venuresincreation</strong></span>
+    </div>
 
+    <ul class="nav-links">
+        <li><a href="index.html">🏠 Home</a></li>
+    </ul>
 
-    <main class="main">
-        <div class="track-container">
-            <h2>Track Your Order 🚚</h2>
-            <input type="text" id="nameInput" placeholder="Enter Your name" />
-            <input type="text" id="phoneInput" placeholder="Enter Your Phone Number"/>
-            <button onclick="traclOrder()">Track</button>
-            <div class="loader" id="loader"></div>
-            <div id="orderResult" class="order-result" style="display: none;"></div>
-            <div id="noorder" class="no-order" style="display: none;">No orders Found</div>
-        </div>
-    </main>
+    <button class="toggle-btn" onclick="toggleTheme()">🌙</button>
+</nav>
 
-    <footer class="footer">
-        <p>&copy; 2025 <span class="brand">Venuresincreation</span>. All Rights Reserved.</p>
-        <p><a href="contact.html" class="contact-link">Contact Us</a></p>
-    </footer>
+  <main class="main">
+    <div class="track-container">
+      <h2>Track Your Order 🚚</h2>
+      <input type="text" id="nameInput" placeholder="Enter Your name" />
+      <input
+        type="text"
+        id="phoneInput"
+        placeholder="Enter Your Phone Number"
+      />
+      <button onclick="traclOrder()">Track</button>
+      <div class="loader" id="loader"></div>
+      <div id="orderResult" class="order-result" style="display: none"></div>
+      <div id="noorder" class="no-order" style="display: none">
+        No orders Found
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>
+      &copy; 2025 <span class="brand">Venuresincreation</span>. All Rights
+      Reserved.
+    </p>
+    <p><a href="contact.html" class="contact-link">Contact Us</a></p>
+  </footer>
+
+  <!-- Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+<script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyA0StbmF9z2kK4WMEOpG9qO9XwlAfd",
+      authDomain: "ecommerce-492b2.firebaseapp.com",
+      databaseURL: "https://resinecomsite-b81db-default-rtdb.firebaseio.com/",
+      projectId: "ecommerce-492b2",
+      storageBucket: "ecommerce-492b2.appspot.com",
+      messagingSenderId: "973139470429",
+      appId: "1:973139470429:web:0c1915e57edfd72e6b0cb1"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function trackOrder() {
+      const name = document.getElementById("nameInput").value.trim();
+      const phone = document.getElementById("phoneInput").value.trim();
+      const resultDiv = document.getElementById("orderResult");
+      const noOrderDiv = document.getElementById("noOrder");
+      const loader = document.getElementById("loader");
+
+      resultDiv.style.display = "none";
+      noOrderDiv.style.display = "none";
+
+      if (!name || !phone) { alert("Please enter both name and phone number."); return; }
+
+      loader.style.display = "block";
+
+      db.ref("orders").once("value", snapshot => {
+        loader.style.display = "none";
+        const orders = snapshot.val();
+        let found = false;
+
+        for (const key in orders) {
+          const order = orders[key];
+          if (order.customer.name.toLowerCase() === name.toLowerCase() &&
+              order.customer.phone === phone) {
+            found = true;
+            let activeStep = 1;
+            if (order.status === "Packed") activeStep = 2;
+            else if (order.status === "Shipped") activeStep = 3;
+
+            const progressHTML = `
+              <div class="progress-container">
+                <div class="status-bar">
+                  <div class="status-step ${activeStep >= 1 ? 'status-active' : ''}">1</div>
+                  <div class="status-step ${activeStep >= 2 ? 'status-active' : ''}">2</div>
+                  <div class="status-step ${activeStep >= 3 ? 'status-active' : ''}">3</div>
+                </div>
+                <div class="status-labels">
+                  <span>Packing</span>
+                  <span>Packed</span>
+                  <span>Shipped</span>
+                </div>
+              </div>
+            `;
+            resultDiv.innerHTML = `
+              <p><strong>Order ID:</strong> ${order.orderId}</p>
+              <p><strong>Status:</strong> ${order.status}</p>
+              <p><strong>Estimated Delivery:</strong> 4-7 business days</p>
+              ${progressHTML}
+            `;
+            resultDiv.style.display = "block";
+            break;
+          }
+        }
+        if (!found) noOrderDiv.style.display = "block";
+      });
+    }
+
+    // 🌙 Dark Mode Toggle
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+    }
+</script>
+
 
 </body>
+</html>
