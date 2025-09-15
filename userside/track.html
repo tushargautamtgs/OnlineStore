@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Track Order | Venuresincreation</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
     <style>
+        /* Default Light Theme */
         :root {
           --bg-color: #f8f8f8;
           --card-color: #fff;
@@ -110,46 +108,42 @@
   box-shadow: 0 0 10px rgba(255,118,140,0.5);
 }
 
-      /* track container  */
 
-      .main {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 30px 15px;
-      }
-
-      .track-container {
-        max-width: 520px;
-        background: var(--card-color);
-        border-radius: 25px;
-        padding: 35px 25px;
-        text-align: center;
-        box-shadow: 0 6px 18px rgba(178, 178, 61, 0.538);
-        transition: background 0.3s ease;
-      }
-
-      .track-container h2 {
-        margin-bottom: 20px;
-        font-size: 22px;
-        background: linear-gradient(45deg, #db8aac, #be6a78);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-       .track-container input {
+        /* Track Container */
+        .main {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 30px 15px;
+        }
+        .track-container {
+          max-width: 520px;
+          background: var(--card-color);
+          border-radius: 20px;
+          padding: 35px 25px;
+          text-align: center;
+          box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+          transition: background 0.3s ease;
+        }
+        .track-container h2 {
+          margin-bottom: 20px;
+          font-size: 22px;
+          background: linear-gradient(45deg, #ff7eb3, #ff758c);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .track-container input {
           width: 90%;
           padding: 12px;
           margin: 8px 0;
           border-radius: 12px;
-          border: 2px solid #170303;
+          border: 1px solid #ddd;
           font-size: 15px;
           background: var(--input-color);
           color: var(--text-color);
         }
-
-            .track-container button {
+        .track-container button {
           margin-top: 18px;
           background: linear-gradient(90deg, #ff7eb3, #ff758c);
           border: none; color: #fff;
@@ -164,7 +158,7 @@
           transform: translateY(-2px) scale(1.05);
         }
 
-                /* Results */
+        /* Results */
         .order-result {
           margin-top: 20px;
           background: rgba(255,255,255,0.85);
@@ -248,10 +242,9 @@
           color: white;
         }
     </style>
-  </head>
+</head>
 <body>
-  <!-- //navbar -->
-
+<!-- Navbar -->
 <nav class="navbar">
     <div class="logo-container">
         <img src="logo.jpg" alt="Logo" class="logo-img">
@@ -265,33 +258,27 @@
     <button class="toggle-btn" onclick="toggleTheme()">🌙</button>
 </nav>
 
-  <main class="main">
+<!-- Main Section -->
+<main class="main">
     <div class="track-container">
-      <h2>Track Your Order 🚚</h2>
-      <input type="text" id="nameInput" placeholder="Enter Your name" />
-      <input
-        type="text"
-        id="phoneInput"
-        placeholder="Enter Your Phone Number"
-      />
-      <button onclick="traclOrder()">Track</button>
-      <div class="loader" id="loader"></div>
-      <div id="orderResult" class="order-result" style="display: none"></div>
-      <div id="noorder" class="no-order" style="display: none">
-        No orders Found
-      </div>
+        <h2>Track Your Order 🚚</h2>
+        <input type="text" id="nameInput" placeholder="Enter Your Name" />
+        <input type="text" id="phoneInput" placeholder="Enter Your Phone Number" />
+        <button onclick="trackOrder()">Track</button>
+
+        <div class="loader" id="loader"></div>
+        <div id="orderResult" class="order-result" style="display:none;"></div>
+        <div id="noOrder" class="no-order" style="display:none;">No orders found.</div>
     </div>
-  </main>
+</main>
 
-  <footer class="footer">
-    <p>
-      &copy; 2025 <span class="brand">Venuresincreation</span>. All Rights
-      Reserved.
-    </p>
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 <span class="brand">Venuresincreation</span>. All Rights Reserved.</p>
     <p><a href="contact.html" class="contact-link">Contact Us</a></p>
-  </footer>
+</footer>
 
-  <!-- Scripts -->
+<!-- Scripts -->
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 <script>
@@ -369,7 +356,5 @@
       document.body.classList.toggle("dark");
     }
 </script>
-
-
 </body>
 </html>
