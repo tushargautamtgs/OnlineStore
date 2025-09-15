@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track Order | Venuresincreation</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+
+        /* Default Light Theme */
+        :root {
+          --bg-color: #f8f8f8;
+          --card-color: #fff;
+          --text-color: #333;
+          --input-color: #fff;
+          --footer-bg: rgba(255,255,255,0.9);
+          --footer-text: #333;
+        }
+        /* Dark Theme Variables */
+        body.dark {
+          --bg-color: #1e1e2f;
+          --card-color: #2a2a40;
+          --text-color: #f1f1f1;
+          --input-color: #333;
+          --footer-bg: #111;
+          --footer-text: #ccc;
+        }
+
+        body {
+          font-family: 'Poppins', sans-serif;
+          margin: 0;
+          padding: 0;
+          background: var(--bg-color);
+          color: var(--text-color);
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+          transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navbar */
+   .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+        body.dark .navbar {
+          background: #2d2d44;
+          color: #fff;
+        }
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 40px; height: 40px; object-fit: cover; border-radius: 50%; }
+        .logo-text { font-weight: bold; font-size: 18px; }
+
+        .nav-links {
+  display: flex;
+  gap: 15px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  width: 100%;
+}
+        </style>
+  </head>
+</html>
+<body>
+    <!-- //navbar -->
+     
+    <nav class="navbar">
+        <div class="logo.JPG">
+            <img src = "logo.JPG" alt="Logo" class="logo-img">
+            <span class="logo-text">Venuresincreation</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">🏠 Home</a></li>
+        </ul>
+        <ul>
+            <button class="btn" onclick="toggleTheme()">🌙</button>
+        </ul>
+    </nav>
+
+
+    <main class="main">
+        <div class="track-container">
+            <h2>Track Your Order 🚚</h2>
+            <input type="text" id="nameInput" placeholder="Enter Your name" />
+            <input type="text" id="phoneInput" placeholder="Enter Your Phone Number"/>
+            <button onclick="traclOrder()">Track</button>
+            <div class="loader" id="loader"></div>
+            <div id="orderResult" class="order-result" style="display: none;"></div>
+            <div id="noorder" class="no-order" style="display: none;">No orders Found</div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 <span class="brand">Venuresincreation</span>. All Rights Reserved.</p>
+        <p><a href="contact.html" class="contact-link">Contact Us</a></p>
+    </footer>
+
+</body>
