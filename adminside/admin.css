@@ -8,7 +8,7 @@
 
 /* Background */
 body {
-  background: linear-gradient(135deg, #bf32e3 0%, #3462cf 100%);
+  background: linear-gradient(135deg, #116564 0%, #4e6498 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -29,7 +29,7 @@ body {
 /* Card */
 .login-card {
   width: 360px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(84, 132, 186, 0.262);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
@@ -50,7 +50,7 @@ body {
   width: 58px;
   height: 58px;
   border-radius: 16px;
-  background: linear-gradient(135deg,#bf32e3,#00e2ff);
+  background: linear-gradient(135deg,#5a555c,#00e2ff);
   display: flex;
   align-items: center;
   justify-content: center;
