@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+<div class="login-wrapper">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-icon">🔒</div>
+            <h2>Resin Admin</h2>
+            <p class="subtext">Access Restricted • Authorized Personnel Only</p>
+        </div>
+
+        <div class="input-group">
+            <input type="email" id="email" required />
+            <label for="email">Email</label>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" required />
+            <label for="password">Password</label>
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
+        </div>
+
+        <button onclick="login()"><span>Login</span></button>
+        <p id="loginMessage"></p>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxblilB8EEB3Z3X6Vt2pRUTIYunrPjiIU",
+      authDomain: "resinecomsite-b81db.firebaseapp.com",
+      databaseURL: "https://resinecomsite-b81db-default-rtdb.firebaseio.com",
+      projectId: "resinecomsite-b81db",
+      storageBucket: "resinecomsite-b81db.appspot.com",
+      messagingSenderId: "218978469921",
+      appId: "1:218978469921:web:c6c7f790b1d869442a7b60"
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
+<script src="admin.js"></script>
+</body>
+</html>
