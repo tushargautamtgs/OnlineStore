@@ -1,0 +1,37 @@
+function login() {
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const loginMessage = document.getElementById('loginMessage');
+
+  if (!emailInput || !passwordInput) {
+    console.error('Email or Password input not found.');
+    return;
+  }
+
+  const email = emailInput.value;
+  const password = passwordInput.value;
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(() => {
+      loginMessage.textContent = 'Login successful!';
+      window.location.href = "test.html";
+    })
+    .catch((error) => {
+      console.error("Login Error:", error);
+      loginMessage.textContent = "Invalid credentials!";
+    });
+}
+
+// Toggle Password Visibility
+function togglePassword() {
+  const passwordInput = document.getElementById('password');
+  const toggleIcon = document.querySelector('.toggle-password');
+
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    toggleIcon.textContent = "🙈";
+  } else {
+    passwordInput.type = "password";
+    toggleIcon.textContent = "👁️";
+  }
+}
