@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us | ResinCrafts</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #1e1e2f, #2d2d4a);
+        color: #fff;
+        height: 100vh;
+        overflow-x: hidden;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+</style>
+  </head>
+  <body>
+    <div class="navbar">
+      <h1>Contact Us</h1>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h2>Contact Us</h2>
+      <div class="form-group">
+        <input type="text" id="name" placeholder=" " required />
+        <label for="name">Your Name</label>
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" placeholder=" " required />
+        <label for="email">Your Email</label>
+      </div>
+      <div class="form-group">
+        <textarea id="message" placeholder=" " required></textarea>
+        <label for="message">Your Message</label>
+      </div>
+      <button onclick="sendMessage()">Send Message</button>
+    </div>
+
+    <!-- Chat Icon -->
+    <div class="chat-icon" onclick="toggleChat()">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M20 2H4C2.89 2 2 .89 2 2v20l4-4h14c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2z"
+        />
+      </svg>
+    </div>
+
+    <!-- Chat Box -->
+    <div class="chat-box" id="chatBox">
+      <div class="chat-header">Live Chat</div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type a message..." />
+        <button onclick="sendChat()">Send</button>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+<script>
+    // to be continue
+</script>
+  </body>
+</html>
