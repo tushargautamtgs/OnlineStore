@@ -1,451 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us | ResinCrafts</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
     <style>
-        body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1e1e2f, #2d2d4a);
-    color: #fff;
-    height: 100vh;
-    overflow-x: hidden;
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #1e1e2f, #2d2d4a);
+        color: #fff;
+        height: 100vh;
+        overflow-x: hidden;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
 
+      .contact-card {
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        padding: 50px;
+        width: 90%;
+        max-width: 500px;
+        margin: 40px auto;
+        animation: slideIn 0.7s ease;
+      }
 
-          .contact-card {
+      .contact-card h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 28px;
+        background: linear-gradient(90deg, #ff6ec4, #7873f5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
 
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-            border-radius: 10px;
-            padding: 50px;
-            width: 90%;
-            max-width: 500px;
-            margin: 40px auto;
-            animation: slideIn 0.7s ease;
-          }
+      .form-group {
+        position: relative;
+        margin-bottom: 25px;
+      }
 
-          .contact-card h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 28px;
-            background: linear-gradient(90deg, #ff6ec4, #7873f5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-          }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 16px;
+        outline: none;
+      }
 
-          .form-group {
-            position: relative;
-            margin-bottom: 25px;
-          }
+      .form-group label {
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        transform: translateY(-50%);
+        color: #ccc;
+        font-size: 14px;
+        pointer-events: none;
+        transition: all 0.3s ease;
+      }
 
-          .form-group input,
-          .form-group textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            font-size: 16px;
-            outline: none;
-          }
+      .form-group input:focus + label,
+      .form-group input:not(:placeholder-shown) + label,
+      .form-group textarea:focus + label,
+      .form-group textarea:not(:placeholder-shown) + label {
+        top: -8px;
+        font-size: 12px;
+        color: #ff6ec4;
+      }
 
-          .form-group label {
-            position: absolute;
-            top: 50%;
-            left: 16px;
-            transform: translateY(-50%);
-            color: #ccc;
-            font-size: 14px;
-            pointer-events: none;
-            transition: all 0.3s ease;
-          }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
 
-          .form-group input:focus + label,
-          .form-group input:not(:placeholder-shown) + label,
-          .form-group textarea:focus + label,
-          .form-group textarea:not(:placeholder-shown) + label {
-            top: -8px;
-            font-size: 12px;
-            color: #ff6ec4;
-          }
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        background: linear-gradient(to right, #ff6ec4, #7873f5);
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
 
-          .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-          }
+      button:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(255, 110, 196, 0.5);
+      }
 
-          button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            background: linear-gradient(to right, #ff6ec4, #7873f5);
-            color: #fff;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-          }
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        display: none;
+        z-index: 9999;
+      }
 
-          button:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 15px rgba(255,110,196,0.5);
-          }
+      @keyframes slideIn {
+        from {
+          transform: translateY(40px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
 
-          .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: none;
-            z-index: 9999;
-          }
+      /* Chat Icon */
+      .chat-icon {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(to right, #ff6ec4, #7873f5);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 0 15px rgba(255, 110, 196, 0.7);
+        animation: pulse 2s infinite;
+      }
 
-          @keyframes slideIn {
-            from {
-              transform: translateY(40px);
-              opacity: 0;
-            }
-            to {
-              transform: translateY(0);
-              opacity: 1;
-            }
-          }
+      .chat-icon svg {
+        fill: #fff;
+        width: 28px;
+        height: 28px;
+      }
 
-          /* Chat Icon */
-          .chat-icon {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(to right, #ff6ec4, #7873f5);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(255,110,196,0.7);
-            animation: pulse 2s infinite;
-          }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 rgba(255, 110, 196, 0.5);
+        }
+        70% {
+          box-shadow: 0 0 15px rgba(255, 110, 196, 0.8);
+        }
+        100% {
+          box-shadow: 0 0 0 rgba(255, 110, 196, 0.5);
+        }
+      }
 
-          .chat-icon svg {
-            fill: #fff;
-            width: 28px;
-            height: 28px;
-          }
+      /* Chat Box */
+      .chat-box {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 300px;
+        max-height: 400px;
+        background: #2a2a40;
+        border-radius: 15px;
+        overflow: hidden;
+        display: none;
+        flex-direction: column;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        z-index: 999;
+      }
 
-          @keyframes pulse {
-            0% { box-shadow: 0 0 0 rgba(255,110,196,0.5); }
-            70% { box-shadow: 0 0 15px rgba(255,110,196,0.8); }
-            100% { box-shadow: 0 0 0 rgba(255,110,196,0.5); }
-          }
+      .chat-header {
+        background: linear-gradient(to right, #ff6ec4, #7873f5);
+        padding: 10px 15px;
+        color: #fff;
+        font-weight: bold;
+      }
 
-          /* Chat Box */
-          .chat-box {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            width: 300px;
-            max-height: 400px;
-            background: #2a2a40;
-            border-radius: 15px;
-            overflow: hidden;
-            display: none;
-            flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.4);
-            z-index: 999;
-          }
+      .chat-messages {
+        flex: 1;
+        padding: 10px;
+        overflow-y: auto;
+        font-size: 14px;
+      }
 
-          .chat-header {
-            background: linear-gradient(to right, #ff6ec4, #7873f5);
-            padding: 10px 15px;
-            color: #fff;
-            font-weight: bold;
-          }
+      .chat-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #444;
+        background: #222;
+      }
 
-          .chat-messages {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            font-size: 14px;
-          }
+      .chat-input input {
+        flex: 1;
+        padding: 8px;
+        border: none;
+        border-radius: 8px;
+        background: #333;
+        color: #fff;
+      }
 
-          .chat-input {
-            display: flex;
-            padding: 10px;
-            border-top: 1px solid #444;
-            background: #222;
-          }
+      .chat-input button {
+        margin-left: 8px;
+        background: #ff6ec4;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 8px 10px;
+        cursor: pointer;
+      }
 
-          .chat-input input {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            border-radius: 8px;
-            background: #333;
-            color: #fff;
-          }
+      @media (max-width: 500px) {
+        .contact-card {
+          padding: 25px;
+        }
+      }
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+        padding: 15px 30px;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-          .chat-input button {
-            margin-left: 8px;
-            background: #ff6ec4;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 8px 10px;
-            cursor: pointer;
-          }
+      .navbar h1 {
+        font-size: 22px;
+        font-weight: 600;
+        color: white;
+        margin: 0;
+      }
 
-          @media (max-width: 500px) {
-            .contact-card {
-              padding: 25px;
-            }
-          }
-           .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
-            padding: 15px 30px;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
+      .nav-links a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 16px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: linear-gradient(to right, #ff6b81, #ff4757);
+        box-shadow: 0 0 10px rgba(255, 75, 75, 0.4);
+        transition: all 0.3s ease-in-out;
+      }
 
-          .navbar h1 {
-            font-size: 22px;
-            font-weight: 600;
-            color: white;
-            margin: 0;
-          }
-
-          .nav-links a {
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 16px;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: linear-gradient(to right, #ff6b81, #ff4757);
-            box-shadow: 0 0 10px rgba(255, 75, 75, 0.4);
-            transition: all 0.3s ease-in-out;
-          }
-
-          .nav-links a:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 75, 75, 0.7);
-          }
-
-
+      .nav-links a:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 75, 75, 0.7);
+      }
     </style>
-</head>
-<body>
-
-<div class="navbar">
-    <h1>Contact Us</h1>
-    <div class="nav-links">
+  </head>
+  <body>
+    <div class="navbar">
+      <h1>Contact Us</h1>
+      <div class="nav-links">
         <a href="index.html">Home</a>
+      </div>
     </div>
-</div>
 
-<div class="contact-card">
-    <h2>Contact Us</h2>
-    <div class="form-group">
+    <div class="contact-card">
+      <h2>Contact Us</h2>
+      <div class="form-group">
         <input type="text" id="name" placeholder=" " required />
         <label for="name">Your Name</label>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <input type="email" id="email" placeholder=" " required />
         <label for="email">Your Email</label>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <textarea id="message" placeholder=" " required></textarea>
         <label for="message">Your Message</label>
+      </div>
+      <button onclick="sendMessage()">Send Message</button>
     </div>
-    <button onclick="sendMessage()">Send Message</button>
-</div>
 
-<!-- Chat Icon -->
-<div class="chat-icon" onclick="toggleChat()">
-    <svg viewBox="0 0 24 24"><path d="M20 2H4C2.89 2 2 .89 2 2v20l4-4h14c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2z"/></svg>
-</div>
+    <!-- Chat Icon -->
+    <div class="chat-icon" onclick="toggleChat()">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M20 2H4C2.89 2 2 .89 2 2v20l4-4h14c1.11 0 2-.89 2-2V4c0-1.11-.89-2-2-2z"
+        />
+      </svg>
+    </div>
 
-<!-- Chat Box -->
-<div class="chat-box" id="chatBox">
-    <div class="chat-header">Live Chat</div>
-    <div class="chat-messages" id="chatMessages"></div>
-    <div class="chat-input">
+    <!-- Chat Box -->
+    <div class="chat-box" id="chatBox">
+      <div class="chat-header">Live Chat</div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <div class="chat-input">
         <input type="text" id="chatInput" placeholder="Type a message..." />
         <button onclick="sendChat()">Send</button>
+      </div>
     </div>
-</div>
 
-<div class="toast" id="toast"></div>
+    <div class="toast" id="toast"></div>
 
-<script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0StbmF9z2kK4WMEOpG9qO9XwlAfd",
+        authDomain: "ecommerce-492b2.firebaseapp.com",
+        databaseURL: "https://resinecomsite-b81db-default-rtdb.firebaseio.com/",
+        projectId: "ecommerce-492b2",
+        storageBucket: "ecommerce-492b2.appspot.com",
+        messagingSenderId: "973139470429",
+        appId: "1:973139470429:web:0c1915e57edfd72e6b0cb1",
+      };
 
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyA0StbmF9z2kK4WMEOpG9qO9XwlAfd",
-      authDomain: "ecommerce-492b2.firebaseapp.com",
-      databaseURL: "https://resinecomsite-b81db-default-rtdb.firebaseio.com/",
-      projectId: "ecommerce-492b2",
-      storageBucket: "ecommerce-492b2.appspot.com",
-      messagingSenderId: "973139470429",
-      appId: "1:973139470429:web:0c1915e57edfd72e6b0cb1"
-    };
+      function showToast(msg) {
+        const toast = document.getElementById("toast");
+        toast.innerText = msg;
+        toast.style.display = "block";
+        setTimeout(() => (toast.style.display = "none"), 3000);
+      }
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+      function validateEmail(email) {
+        const regex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        return regex.test(email);
+      }
+      function sendMessage() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
 
-    function showToast(msg) {
-      const toast = document.getElementById("toast");
-      toast.innerText = msg;
-      toast.style.display = "block";
-      setTimeout(() => toast.style.display = "none", 3000);
-    }
+        if (!name || !email || !message)
+          return showToast("Please fill out all fields.");
+        if (!validateEmail(email))
+          return showToast("Please enter a valid email.");
 
-    function validateEmail(email) {
-      const regex = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-      return regex.test(email);
-    }
-function sendMessage() {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
+        // Local India time format
+        const options = {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+          timeZone: "Asia/Kolkata",
+        };
+        const indianTime = new Intl.DateTimeFormat("en-GB", options).format(
+          new Date()
+        );
 
-  if (!name || !email || !message) return showToast("Please fill out all fields.");
-  if (!validateEmail(email)) return showToast("Please enter a valid email.");
+        const msgId = "msg_" + Date.now();
+        db.ref("messages/" + msgId)
+          .set({
+            name,
+            email,
+            message,
+            status: "Pending",
+            timestamp: indianTime, // ✅ Readable IST time
+          })
+          .then(() => {
+            showToast("Message sent successfully!");
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("message").value = "";
+          })
+          .catch((err) => {
+            console.error(err);
+            showToast("Error sending message.");
+          });
+      }
 
-  // Local India time format
-  const options = {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-    timeZone: "Asia/Kolkata"
-  };
-  const indianTime = new Intl.DateTimeFormat("en-GB", options).format(new Date());
+      // Init Chat Session
+      let sessionId = localStorage.getItem("chatSessionId");
+      if (!sessionId) {
+        sessionId = "sess_" + Date.now();
+        localStorage.setItem("chatSessionId", sessionId);
+      }
+      let chatRef = db.ref("livechats/" + sessionId);
 
-  const msgId = "msg_" + Date.now();
-  db.ref("messages/" + msgId).set({
-    name,
-    email,
-    message,
-    status: "Pending",
-    timestamp: indianTime   // ✅ Readable IST time
-  })
-    .then(() => {
-      showToast("Message sent successfully!");
-      document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("message").value = "";
-    })
-    .catch(err => {
-      console.error(err);
-      showToast("Error sending message.");
-    });
-}
+      // Toggle Chat
+      function toggleChat() {
+        const chatBox = document.getElementById("chatBox");
+        chatBox.style.display =
+          chatBox.style.display === "flex" ? "none" : "flex";
+      }
 
-// Init Chat Session
-let sessionId = localStorage.getItem("chatSessionId");
-if (!sessionId) {
-  sessionId = "sess_" + Date.now();
-  localStorage.setItem("chatSessionId", sessionId);
-}
-let chatRef = db.ref("livechats/" + sessionId);
+      // Send Chat
+      function sendChat() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+        if (!message) return;
 
-// Toggle Chat
-function toggleChat() {
-  const chatBox = document.getElementById("chatBox");
-  chatBox.style.display = chatBox.style.display === "flex" ? "none" : "flex";
-}
+        // Check if session ended
+        db.ref("livechats/" + sessionId)
+          .once("value")
+          .then((snapshot) => {
+            const data = snapshot.val();
+            if (data && data.status === "ended") {
+              // Start new session
+              sessionId = "sess_" + Date.now();
+              localStorage.setItem("chatSessionId", sessionId);
+              chatRef = db.ref("livechats/" + sessionId);
 
-// Send Chat
-function sendChat() {
-  const input = document.getElementById("chatInput");
-  const message = input.value.trim();
-  if (!message) return;
+              // Push new message
+              chatRef.push({ from: "user", message });
+            } else {
+              // Same session
+              chatRef.push({ from: "user", message });
+            }
+          });
 
-  // Check if session ended
-  db.ref("livechats/" + sessionId).once("value").then(snapshot => {
-    const data = snapshot.val();
-    if (data && data.status === "ended") {
-      // Start new session
-      sessionId = "sess_" + Date.now();
-      localStorage.setItem("chatSessionId", sessionId);
-      chatRef = db.ref("livechats/" + sessionId);
+        input.value = "";
+      }
 
-      // Push new message
-      chatRef.push({ from: "user", message });
-    } else {
-      // Same session
-      chatRef.push({ from: "user", message });
-    }
-  });
+      // Listen for new messages
+      chatRef.on("child_added", (snapshot) => {
+        const data = snapshot.val();
+        const msgDiv = document.createElement("div");
+        msgDiv.innerText =
+          (data.from === "admin" ? "🛠 Admin: " : "🙋 You: ") + data.message;
+        msgDiv.style.marginBottom = "8px";
+        msgDiv.style.color = data.from === "admin" ? "#ff6ec4" : "#ccc";
+        document.getElementById("chatMessages").appendChild(msgDiv);
+        const chatMessages = document.getElementById("chatMessages");
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      });
 
-  input.value = "";
-}
+      // Show "Chat Ended" If Status is Ended
+      db.ref("livechats/" + sessionId).on("value", (snapshot) => {
+        const chatMessagesDiv = document.getElementById("chatMessages");
+        const data = snapshot.val();
 
-// Listen for new messages
-chatRef.on("child_added", snapshot => {
-  const data = snapshot.val();
-  const msgDiv = document.createElement("div");
-  msgDiv.innerText = (data.from === "admin" ? "🛠 Admin: " : "🙋 You: ") + data.message;
-  msgDiv.style.marginBottom = "8px";
-  msgDiv.style.color = data.from === "admin" ? "#ff6ec4" : "#ccc";
-  document.getElementById("chatMessages").appendChild(msgDiv);
-  const chatMessages = document.getElementById("chatMessages");
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-});
+        if (data && data.status === "ended") {
+          chatMessagesDiv.innerHTML = "";
 
-// Show "Chat Ended" If Status is Ended
-db.ref("livechats/" + sessionId).on("value", snapshot => {
-  const chatMessagesDiv = document.getElementById("chatMessages");
-  const data = snapshot.val();
+          const msgDiv = document.createElement("div");
+          msgDiv.className = "message system";
+          msgDiv.textContent = "This chat has been closed by admin.";
+          chatMessagesDiv.appendChild(msgDiv);
 
-  if (data && data.status === "ended") {
-    chatMessagesDiv.innerHTML = "";
-
-    const msgDiv = document.createElement("div");
-    msgDiv.className = "message system";
-    msgDiv.textContent = "This chat has been closed by admin.";
-    chatMessagesDiv.appendChild(msgDiv);
-
-    setTimeout(() => {
-      chatMessagesDiv.innerHTML = "";
-    }, 2000);
-  }
-});
-
-
-</script>
-
-</body>
+          setTimeout(() => {
+            chatMessagesDiv.innerHTML = "";
+          }, 2000);
+        }
+      });
+    </script>
+  </body>
 </html>
