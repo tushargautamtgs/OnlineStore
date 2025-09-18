@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Orders | Resin Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet" />
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        /* Navbar */
+        .admin-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 15px 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-logo span {
+            font-size: 20px;
+            font-weight: 600;
+            color: #4B4B4B;
+        }
+        .admin-nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        .admin-nav-links li a {
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .admin-nav-links li a:hover,
+        .admin-nav-links li a.active {
+            background: #667eea;
+            color: #fff;
+        }
+
+        /* Orders Section */
+        .orders-section {
+            padding: 30px 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .orders-section h2 {
+            font-weight: 600;
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        /* Orders Table */
+        .orders-table {
+            width: 100%;
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            text-align: left;
+            padding: 15px 12px;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        th {
+            background: #667eea;
+            color: #fff;
+            font-weight: 600;
+        }
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+            display: inline-block;
+        }
+        .status-In\ Packing {
+            background: #f0ad4e;
+        }
+        .status-Packed {
+            background: #5bc0de;
+        }
+        .status-Shipped {
+            background: #28a745;
+        }
+
+        /* Update Button */
+        .update-btn {
+            background: #667eea;
+            border: none;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .update-btn:hover {
+            background: #5a67d8;
+        }
+
+        /* Glassmorphism Modal */
+        .status-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            z-index: 2000;
+            width: 320px;
+            color: #000;
+            animation: popUp 0.3s ease-out;
+        }
+        @keyframes popUp {
+            from { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        .status-modal select,
+        .status-modal input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .status-modal button {
+            background: #28a745;
+            color: #fff;
+            padding: 12px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .status-modal button:hover {
+            background: #218838;
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        /* Mobile Dashboard Button */
+        .mobile-dashboard-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 22px;
+            border-radius: 14px;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(102,126,234,0.5);
+            text-decoration: none;
+            z-index: 9999;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .mobile-dashboard-btn:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.6);
+            text-shadow: 0 1px 4px rgba(255,255,255,0.3);
+        }
+        @media (max-width:768px) {
+            .mobile-dashboard-btn {
+                display: block;
+            }
+            .admin-nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="admin-navbar">
+    <div class="nav-logo">
+        <span>Resin Admin</span>
+    </div>
+    <ul class="admin-nav-links">
+        <li><a href="test.html">Dashboard</a></li>
+        <li><a href="orders.html" class="active">Orders</a></li>
+        <li><a href="../ResinEcomSiteUser/index.html">Store</a></li>
+        <li><a href="admin-chat.html">Live Chat</a></li>
+        <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+</nav>
+
+<!-- Orders Section -->
+<section class="orders-section">
+    <h2>All Orders</h2>
+    <div class="orders-table">
+        <table id="ordersTable">
+            <tbody id="ordersContainer">
+            <!-- Orders dynamically populated from Firebase here -->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Status Update Modal -->
+<div id="statusModal" class="status-modal">
+    <h3>Update Order Status</h3>
+    <select id="statusSelect" aria-label="Order status">
+        <option value="In Packing">In Packing</option>
+        <option value="Packed">Packed</option>
+        <option value="Shipped">Shipped</option>
+    </select>
+    <input type="text" id="trackingInput" placeholder="Tracking ID" style="display: none;" aria-label="Tracking ID" />
+    <input type="text" id="courierInput" placeholder="Courier Company" style="display: none;" aria-label="Courier Company" />
+    <button id="updateStatusBtn">Update</button>
+</div>
+
+<!-- Overlay -->
+<div id="overlay" class="overlay"></div>
+
+<!-- Mobile Dashboard Button -->
+<a href="test.html" class="mobile-dashboard-btn">Dashboard</a>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="orders.js"></script>
+
+<script>
+    // Logout function
+    function logout() {
+        localStorage.removeItem('adminLoggedIn');
+        window.location.href = 'index.html';
+    }
+
+    // UI elements references
+    const ordersContainer = document.getElementById('ordersContainer');
+    const statusModal = document.getElementById('statusModal');
+    const overlay = document.getElementById('overlay');
+    const statusSelect = document.getElementById('statusSelect');
+    const trackingInput = document.getElementById('trackingInput');
+    const courierInput = document.getElementById('courierInput');
+    const updateStatusBtn = document.getElementById('updateStatusBtn');
+
+    let editingIndex = null;
+    let orders = []; // This should be populated from your Firebase in orders.js
+
+    // Helper to create status badge
+    function getStatusBadge(status) {
+        const safeClass = status.replace(/\s/g, '\\ ');
+        return `<span class="status-badge status-${safeClass}">${status}</span>`;
+    }
+
+    // Render orders in table
+    function renderOrders() {
+        ordersContainer.innerHTML = '';
+        orders.forEach((order, index) => {
+            const trackingText = order.status === 'Shipped' && order.trackingId && order.courier
+                ? `${order.trackingId} (${order.courier})`
+                : '-';
+            ordersContainer.innerHTML += `
+              <tr>
+                <td>${order.id}</td>
+                <td>${order.customer}</td>
+                <td>${getStatusBadge(order.status)}</td>
+                <td>${trackingText}</td>
+                <td><button class="update-btn" data-index="${index}">Update</button></td>
+              </tr>
+            `;
+        });
+        attachUpdateListeners();
+    }
+
+    // Attach event listeners to update buttons
+    function attachUpdateListeners() {
+        const buttons = document.querySelectorAll('.update-btn');
+        buttons.forEach(btn => {
+            btn.onclick = e => {
+                editingIndex = e.target.dataset.index;
+                openModal(editingIndex);
+            };
+        });
+    }
+
+    // Open modal and populate with order data
+    function openModal(index) {
+        const order = orders[index];
+        statusSelect.value = order.status;
+        if (order.status === 'Shipped') {
+            trackingInput.style.display = 'block';
+            courierInput.style.display = 'block';
+            trackingInput.value = order.trackingId || '';
+            courierInput.value = order.courier || '';
+        } else {
+            trackingInput.style.display = 'none';
+            courierInput.style.display = 'none';
+            trackingInput.value = '';
+            courierInput.value = '';
+        }
+        statusModal.style.display = 'block';
+        overlay.style.display = 'block';
+    }
+
+    // Listen for status change to toggle fields
+    statusSelect.addEventListener('change', () => {
+        if (statusSelect.value === 'Shipped') {
+            trackingInput.style.display = 'block';
+            courierInput.style.display = 'block';
+        } else {
+            trackingInput.style.display = 'none';
+            courierInput.style.display = 'none';
+            trackingInput.value = '';
+            courierInput.value = '';
+        }
+    });
+
+    // Update order status and close modal
+    updateStatusBtn.addEventListener('click', () => {
+        if (editingIndex === null) return;
+
+        const newStatus = statusSelect.value;
+        const newTracking = trackingInput.value.trim();
+        const newCourier = courierInput.value.trim();
+
+        if (newStatus === 'Shipped' && (!newTracking || !newCourier)) {
+            alert('Please enter Tracking ID and Courier Company for shipped orders.');
+            return;
+        }
+
+        orders[editingIndex].status = newStatus;
+        orders[editingIndex].trackingId = newStatus === 'Shipped' ? newTracking : '';
+        orders[editingIndex].courier = newStatus === 'Shipped' ? newCourier : '';
+
+        // Here you will update the Firebase DB as well (add in orders.js)
+
+        renderOrders();
+        closeModal();
+    });
+
+    // Close modal and overlay
+    function closeModal() {
+        statusModal.style.display = 'none';
+        overlay.style.display = 'none';
+        editingIndex = null;
+    }
+
+    overlay.addEventListener('click', closeModal);
+
+    // This function should be called from your Firebase data fetch logic in orders.js like this:
+    // function updateOrdersFromFirebase(data) {
+    //    orders = data;
+    //    renderOrders();
+    // }
+</script>
+</body>
+</html>
