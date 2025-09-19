@@ -318,7 +318,7 @@ body {
     display: none;
     flex-direction: column;
     justify-content: space-between;
-    width: 25px;
+    width: 40px;
     height: 22px;
     cursor: pointer;
     z-index: 101;
