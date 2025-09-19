@@ -1,503 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
     <title>Admin Dashboard - ResinEcom</title>
     <style>
-        /* Reset and Base */
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+      
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
 
-        body {
-          background: #f5f7fa;
-          color: #333;
-          line-height: 1.6;
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          font-weight: 500;
-        }
+      body {
+        background: #f5f7fa;
+        color: #333;
+        line-height: 1.6;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-weight: 500;
+      }
 
-        /* Navbar */
-        nav.admin-navbar {
-          background: #1a1a2e;
-          color: #fff;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 0 2rem;
-          height: 60px;
-          position: sticky;
-          top: 0;
-          z-index: 1000;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-        }
-        nav.admin-navbar .nav-logo span {
-          font-weight: 700;
-          font-size: 1.4rem;
-          letter-spacing: 1.5px;
-          cursor: default;
-          user-select: none;
-        }
+      /* Navbar */
+      nav.admin-navbar {
+        background: #1a1a2e;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+        height: 60px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      nav.admin-navbar .nav-logo span {
+        font-weight: 700;
+        font-size: 1.4rem;
+        letter-spacing: 1.5px;
+        cursor: default;
+        user-select: none;
+      }
 
-        /* Hamburger */
-        nav.admin-navbar .hamburger {
-          display: none;
-          flex-direction: column;
-          cursor: pointer;
-          gap: 5px;
-        }
-        nav.admin-navbar .hamburger .line {
-          width: 25px;
-          height: 3px;
-          background: #fff;
-          border-radius: 2px;
-          transition: all 0.3s ease;
-        }
-        nav.admin-navbar .hamburger.active .line:nth-child(1) {
-          transform: rotate(45deg) translate(5px, 5px);
-        }
-        nav.admin-navbar .hamburger.active .line:nth-child(2) {
+      /* Hamburger */
+      nav.admin-navbar .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+      nav.admin-navbar .hamburger .line {
+        width: 25px;
+        height: 3px;
+        background: #fff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+      nav.admin-navbar .hamburger.active .line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      nav.admin-navbar .hamburger.active .line:nth-child(2) {
+        opacity: 0;
+      }
+      nav.admin-navbar .hamburger.active .line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+      }
+
+      /* Navbar Links */
+      nav.admin-navbar ul.admin-nav-links {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+      }
+      nav.admin-navbar ul.admin-nav-links li a {
+        text-decoration: none;
+        color: #ccd6f6;
+        font-weight: 600;
+        padding: 0.4rem 0.6rem;
+        border-radius: 4px;
+        transition: background 0.3s ease, color 0.3s ease;
+        display: inline-block;
+        user-select: none;
+      }
+      nav.admin-navbar ul.admin-nav-links li a:hover,
+      nav.admin-navbar ul.admin-nav-links li a.active {
+        background: #16213e;
+        color: #00a8ff;
+      }
+
+      nav.admin-navbar ul.admin-nav-links.show {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: #1a1a2e;
+        width: 200px;
+        padding: 1.5rem 1rem;
+        border-radius: 0 0 0 8px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation: slideDown 0.3s ease forwards;
+      }
+      @keyframes slideDown {
+        from {
           opacity: 0;
+          transform: translateY(-10px);
         }
-        nav.admin-navbar .hamburger.active .line:nth-child(3) {
-          transform: rotate(-45deg) translate(5px, -5px);
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
+      }
 
-        /* Navbar Links */
+      /* Dashboard Container */
+      main.dashboard-container {
+        flex: 1;
+        padding: 2rem 3rem;
+        max-width: 1100px;
+        margin: 0 auto 3rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2.4rem;
+      }
+
+      /* Card */
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        padding: 1.8rem 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: box-shadow 0.3s ease;
+      }
+      .card:hover {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      }
+      .card h2 {
+        font-size: 1.4rem;
+        color: #16213e;
+        font-weight: 700;
+      }
+      .card input[type="text"],
+      .card input[type="number"],
+      .card select {
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+      }
+      .card input[type="text"]:focus,
+      .card input[type="number"]:focus,
+      .card select:focus {
+        border-color: #00a8ff;
+        outline: none;
+      }
+      .card input[type="file"] {
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        color: #16213e;
+      }
+      .card button {
+        align-self: flex-start;
+        background: linear-gradient(90deg, #00a8ff 0%, #0f52ba 100%);
+        border: none;
+        padding: 0.7rem 1.8rem;
+        border-radius: 30px;
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 5px 20px rgba(0, 168, 255, 0.4);
+        transition: box-shadow 0.3s ease, transform 0.2s ease;
+      }
+      .card button:hover {
+        box-shadow: 0 8px 30px rgba(0, 168, 255, 0.7);
+        transform: translateY(-3px);
+      }
+
+      #productListContainer {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); /* default single column */
+        gap: 1rem;
+      }
+
+      /* Each product card styling */
+      .product-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.3s ease;
+        width: 100%; /* full width to fill grid cell */
+      }
+
+      .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .product-card .product-info {
+        padding: 1rem;
+      }
+
+      .product-card .product-info h4 {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #16213e;
+      }
+
+      .product-card .product-info p {
+        font-size: 0.95rem;
+        color: #555;
+      }
+
+      /* Responsive - on mobile screens, 2 columns */
+      @media (max-width: 768px) {
+        #productListContainer {
+          grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+        }
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+      }
+      .modal-content {
+        background: white;
+        border-radius: 14px;
+        max-width: 450px;
+        width: 100%;
+        padding: 2rem 2.2rem;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      .modal-content h2 {
+        color: #16213e;
+        font-weight: 700;
+      }
+      .close-btn {
+        position: absolute;
+        top: 14px;
+        right: 18px;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #555;
+        cursor: pointer;
+      }
+      .modal-content input,
+      .modal-content select {
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+      }
+      .modal-content input:focus,
+      .modal-content select:focus {
+        border-color: #00a8ff;
+        outline: none;
+      }
+      .modal-content button {
+        align-self: flex-end;
+        background: linear-gradient(90deg, #00a8ff 0%, #0f52ba 100%);
+        border: none;
+        padding: 0.7rem 1.8rem;
+        border-radius: 30px;
+        color: #fff;
+        font-size: 1.05rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        nav.admin-navbar .hamburger {
+          display: flex;
+        }
         nav.admin-navbar ul.admin-nav-links {
-          list-style: none;
-          display: flex;
-          gap: 2rem;
-        }
-        nav.admin-navbar ul.admin-nav-links li a {
-          text-decoration: none;
-          color: #ccd6f6;
-          font-weight: 600;
-          padding: 0.4rem 0.6rem;
-          border-radius: 4px;
-          transition: background 0.3s ease, color 0.3s ease;
-          display: inline-block;
-          user-select: none;
-        }
-        nav.admin-navbar ul.admin-nav-links li a:hover,
-        nav.admin-navbar ul.admin-nav-links li a.active {
-          background: #16213e;
-          color: #00a8ff;
-        }
-
-        nav.admin-navbar ul.admin-nav-links.show {
-          display: flex;
-          flex-direction: column;
-          position: absolute;
-          top: 60px;
-          right: 0;
-          background: #1a1a2e;
-          width: 200px;
-          padding: 1.5rem 1rem;
-          border-radius: 0 0 0 8px;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-          animation: slideDown 0.3s ease forwards;
-        }
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        /* Dashboard Container */
-        main.dashboard-container {
-          flex: 1;
-          padding: 2rem 3rem;
-          max-width: 1100px;
-          margin: 0 auto 3rem;
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 2.4rem;
-        }
-
-        /* Card */
-        .card {
-          background: #fff;
-          border-radius: 12px;
-          box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-          padding: 1.8rem 2rem;
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          transition: box-shadow 0.3s ease;
-        }
-        .card:hover {
-          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        .card h2 {
-          font-size: 1.4rem;
-          color: #16213e;
-          font-weight: 700;
-        }
-        .card input[type="text"],
-        .card input[type="number"],
-        .card select {
-          border: 2px solid #ccc;
-          border-radius: 8px;
-          padding: 0.7rem 1rem;
-          font-size: 1rem;
-          transition: border-color 0.3s ease;
-        }
-        .card input[type="text"]:focus,
-        .card input[type="number"]:focus,
-        .card select:focus {
-          border-color: #00a8ff;
-          outline: none;
-        }
-        .card input[type="file"] {
-          border: none;
-          font-size: 1rem;
-          cursor: pointer;
-          color: #16213e;
-        }
-        .card button {
-          align-self: flex-start;
-          background: linear-gradient(90deg, #00a8ff 0%, #0f52ba 100%);
-          border: none;
-          padding: 0.7rem 1.8rem;
-          border-radius: 30px;
-          color: #fff;
-          font-size: 1.1rem;
-          font-weight: 700;
-          cursor: pointer;
-          box-shadow: 0 5px 20px rgba(0, 168, 255, 0.4);
-          transition: box-shadow 0.3s ease, transform 0.2s ease;
-        }
-        .card button:hover {
-          box-shadow: 0 8px 30px rgba(0, 168, 255, 0.7);
-          transform: translateY(-3px);
-        }
-
-#productListContainer {
-  display: grid;
-  grid-template-columns: repeat(1, 1fr); /* default single column */
-  gap: 1rem;
-}
-
-/* Each product card styling */
-.product-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-  width: 100%; /* full width to fill grid cell */
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.18);
-}
-
-.product-card img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
-}
-
-.product-card .product-info {
-  padding: 1rem;
-}
-
-.product-card .product-info h4 {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #16213e;
-}
-
-.product-card .product-info p {
-  font-size: 0.95rem;
-  color: #555;
-}
-
-/* Responsive - on mobile screens, 2 columns */
-@media (max-width: 768px) {
-  #productListContainer {
-    grid-template-columns: repeat(2, 1fr); /* 2 items per row */
-  }
-}
-
-        /* Modal */
-        .modal {
           display: none;
-          position: fixed;
-          z-index: 1100;
-          left: 0;
-          top: 0;
-          width: 100%;
-          height: 100%;
-          backdrop-filter: blur(4px);
-          background-color: rgba(0, 0, 0, 0.4);
-          justify-content: center;
-          align-items: center;
         }
-        .modal-content {
-          background: white;
-          border-radius: 14px;
-          max-width: 450px;
-          width: 100%;
-          padding: 2rem 2.2rem;
-          box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          gap: 1.2rem;
+        main.dashboard-container {
+          grid-template-columns: 1fr;
+          padding: 1rem;
         }
-        .modal-content h2 {
-          color: #16213e;
-          font-weight: 700;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 12px; /* space between buttons */
+        flex-wrap: wrap;
+        margin-top: 10px; /* spacing from product info above */
+      }
+
+      .button-group button {
+        flex: 1; /* equal width buttons */
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+      }
+
+      .edit-btn {
+        background-color: #00a8ff;
+        color: white;
+      }
+
+      .edit-btn:hover {
+        background-color: #0077cc;
+      }
+
+      .delete-btn {
+        background-color: #ff3b3b;
+        color: white;
+      }
+
+      .delete-btn:hover {
+        background-color: #cc2a2a;
+      }
+
+      /* Loader Overlay */
+      #loaderOverlay {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(2px);
+        background: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .loader {
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #00a8ff;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-        .close-btn {
-          position: absolute;
-          top: 14px;
-          right: 18px;
-          font-size: 1.8rem;
-          font-weight: 700;
-          color: #555;
-          cursor: pointer;
+        100% {
+          transform: rotate(360deg);
         }
-        .modal-content input,
-        .modal-content select {
-          border: 2px solid #ccc;
-          border-radius: 8px;
-          padding: 0.7rem 1rem;
-          font-size: 1rem;
-        }
-        .modal-content input:focus,
-        .modal-content select:focus {
-          border-color: #00a8ff;
-          outline: none;
-        }
-        .modal-content button {
-          align-self: flex-end;
-          background: linear-gradient(90deg, #00a8ff 0%, #0f52ba 100%);
-          border: none;
-          padding: 0.7rem 1.8rem;
-          border-radius: 30px;
-          color: #fff;
-          font-size: 1.05rem;
-          font-weight: 700;
-          cursor: pointer;
-        }
+      }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-          nav.admin-navbar .hamburger {
-            display: flex;
-          }
-          nav.admin-navbar ul.admin-nav-links {
-            display: none;
-          }
-          main.dashboard-container {
-            grid-template-columns: 1fr;
-            padding: 1rem;
-          }
-        }
-
-        .button-group {
-  display: flex;
-  gap: 12px; /* space between buttons */
-  flex-wrap: wrap;
-  margin-top: 10px; /* spacing from product info above */
-}
-
-.button-group button {
-  flex: 1; /* equal width buttons */
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.3s ease;
-}
-
-.edit-btn {
-  background-color: #00a8ff;
-  color: white;
-}
-
-.edit-btn:hover {
-  background-color: #0077cc;
-}
-
-.delete-btn {
-  background-color: #ff3b3b;
-  color: white;
-}
-
-.delete-btn:hover {
-  background-color: #cc2a2a;
-}
-
-        /* Loader Overlay */
-#loaderOverlay {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(2px);
-  background: rgba(0, 0, 0, 0.4);
-  justify-content: center;
-  align-items: center;
-}
-
-.loader {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #00a8ff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1s linear infinite;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Toast - Center Fade */
-#toast {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.9);
-  background: #16213e;
-  color: #fff;
-  padding: 16px 24px;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  z-index: 2100;
-}
-#toast.show {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-
+      /* Toast - Center Fade */
+      #toast {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        background: #16213e;
+        color: #fff;
+        padding: 16px 24px;
+        border-radius: 10px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        z-index: 2100;
+      }
+      #toast.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
     </style>
-</head>
-<body>
-
-<!-- Navbar -->
-<nav class="admin-navbar">
-    <div class="nav-logo">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="admin-navbar">
+      <div class="nav-logo">
         <span>Resin Admin</span>
-    </div>
-    <div class="hamburger" id="hamburger">
+      </div>
+      <div class="hamburger" id="hamburger">
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
-    </div>
-    <ul class="admin-nav-links" id="adminNav">
+      </div>
+      <ul class="admin-nav-links" id="adminNav">
         <li><a href="test.html" class="active">Dashboard</a></li>
         <li><a href="orders.html">Orders</a></li>
         <li><a href="https://venuresincreation.netlify.app">Store</a></li>
         <li><a href="admin-chat.html">Live Chat</a></li>
         <li><a href="#" onclick="logout()">Logout</a></li>
         <li><a href="messages.html">Queries</a></li>
+      </ul>
+    </nav>
 
-    </ul>
-</nav>
-
-<!-- Main Content -->
-<main class="dashboard-container">
-    <!-- Category -->
-    <section class="card">
+    <!-- Main Content -->
+    <main class="dashboard-container">
+      <!-- Category -->
+      <section class="card">
         <h2>Add Category</h2>
         <input type="text" id="categoryName" placeholder="Category Name" />
         <button onclick="addCategory()">Add Category</button>
-    </section>
+      </section>
 
-    <section class="card">
+      <section class="card">
         <h2>View All Categories</h2>
         <button onclick="toggleCategoryList()">View All Categories</button>
-        <div id="categoryList" style="margin-top:1rem; display:none;"></div>
-    </section>
+        <div id="categoryList" style="margin-top: 1rem; display: none"></div>
+      </section>
 
-    <!-- Product Upload -->
-    <section class="card">
+      <!-- Product Upload -->
+      <section class="card">
         <h2>Upload Product</h2>
         <input type="text" id="productName" placeholder="Product Name" />
         <input type="number" id="productPrice" placeholder="Price (₹)" />
         <input type="number" id="productStock" placeholder="Stock Quantity" />
         <select id="categoryDropdown">
-            <option value="">Select Category</option>
+          <option value="">Select Category</option>
         </select>
         <input type="file" id="productImage" />
         <button onclick="uploadProduct()">Upload Product</button>
-    </section>
+      </section>
 
-    <!-- Product List -->
-    <section class="card" style="display:flex; flex-direction:column; gap:1rem;">
+      <!-- Product List -->
+      <section
+        class="card"
+        style="display: flex; flex-direction: column; gap: 1rem"
+      >
         <button onclick="fetchProducts()">View All Products</button>
         <div id="productListContainer"></div>
-    </section>
+      </section>
 
-    <!-- Slider -->
-    <section class="slider-container" id="productSliderSection">
+      <!-- Slider -->
+      <section class="slider-container" id="productSliderSection">
         <div class="product-slider" id="productList"></div>
-    </section>
-</main>
+      </section>
+    </main>
 
-<!-- Edit Modal -->
-<div class="modal" id="editModal">
-    <div class="modal-content">
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+      <div class="modal-content">
         <span class="close-btn" onclick="closeEditModal()">&times;</span>
         <h2>Edit Product</h2>
         <input type="text" id="editProductName" placeholder="Product Name" />
         <input type="number" id="editProductPrice" placeholder="Price (₹)" />
-        <input type="number" id="editProductStock" placeholder="Stock Quantity" />
+        <input
+          type="number"
+          id="editProductStock"
+          placeholder="Stock Quantity"
+        />
         <select id="editCategoryDropdown"></select>
         <button onclick="saveEditedProduct()">Save Changes</button>
+      </div>
     </div>
-</div>
 
-<script type="module" src="dashboard.js"></script>
-<script>
-    const hamburger = document.getElementById("hamburger");
-    const navLinks = document.getElementById("adminNav");
+    <script type="module" src="dashboard.js"></script>
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const navLinks = document.getElementById("adminNav");
 
-    hamburger.addEventListener("click", () => {
-      navLinks.classList.toggle("show");
-      hamburger.classList.toggle("active");
-    });
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+        hamburger.classList.toggle("active");
+      });
+    </script>
 
+    <!-- Loader -->
+    <div id="loaderOverlay">
+      <div class="loader"></div>
+    </div>
 
-</script>
-
-<!-- Loader -->
-<div id="loaderOverlay">
-    <div class="loader"></div>
-</div>
-
-<!-- Toast -->
-<div id="toast"></div>
-
-</body>
+    <!-- Toast -->
+    <div id="toast"></div>
+  </body>
 </html>
