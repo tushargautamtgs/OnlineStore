@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resin Admin | Messages</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        display: flex;
+        min-height: 100vh;
+        background: #f8f9fb;
+        color: #333;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 220px;
+        background: #111827;
+        color: #fff;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .sidebar h2 {
+        font-size: 20px;
+        font-weight: 600;
+      }
+      .sidebar a {
+        text-decoration: none;
+        color: #fff;
+        background: #2563eb;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        transition: 0.3s;
+      }
+      .sidebar a:hover {
+        background: #1e40af;
+      }
+
+      /* Main */
+      .main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .tabs {
+        display: flex;
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .tabs button {
+        flex: 1;
+        padding: 15px;
+        border: none;
+        outline: none;
+        background: transparent;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+        position: relative;
+      }
+      .tabs button.active {
+        border-bottom: 3px solid #2563eb;
+        color: #2563eb;
+      }
+      .count-badge {
+        background: #2563eb;
+        color: #fff;
+        font-size: 12px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        margin-left: 8px;
+      }
+
+      .content {
+        display: flex;
+        flex: 1;
+      }
+
+      /* List */
+      .list {
+        width: 320px;
+        border-right: 1px solid #ddd;
+        background: #fff;
+        overflow-y: auto;
+      }
+      .list-item {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .list-item:hover {
+        background: #f3f4f6;
+      }
+      .list-item.active {
+        background: #e0e7ff;
+      }
+      .list-left {
+        display: flex;
+        flex-direction: column;
+      }
+      .list-left span.name {
+        font-weight: 600;
+      }
+      .list-left span.time {
+        font-size: 12px;
+        color: #666;
+        margin-top: 3px;
+      }
+      .badge {
+        font-size: 12px;
+        padding: 3px 7px;
+        border-radius: 12px;
+        font-weight: 600;
+      }
+      .badge.pending {
+        background: #fbbf24;
+        color: #fff;
+      }
+      .badge.resolved {
+        background: #10b981;
+        color: #fff;
+      }
+
+      /* Details */
+      .details {
+        flex: 1;
+        padding: 20px;
+      }
+      .details-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      }
+      .details h3 {
+        margin-bottom: 10px;
+      }
+      .details p {
+        margin: 6px 0;
+      }
+      .status-btns {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+      }
+      .status-btns button {
+        padding: 10px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+      .pending-btn {
+        background: #fbbf24;
+        color: #fff;
+      }
+      .resolved-btn {
+        background: #10b981;
+        color: #fff;
+      }
+      .pending-btn:hover {
+        background: #d97706;
+      }
+      .resolved-btn:hover {
+        background: #059669;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .content {
+          flex-direction: column;
+        }
+        .list {
+          width: 100%;
+          max-height: 200px;
+        }
+      }
+      @media (max-width: 1024px) {
+        body {
+          flex-direction: column;
+        }
+        .sidebar {
+          width: 100%;
+          flex-direction: row;
+          padding: 10px 15px;
+          justify-content: space-around;
+          gap: 0;
+        }
+        .sidebar h2 {
+          font-size: 18px;
+          margin-right: 10px;
+        }
+        .sidebar a {
+          background: transparent;
+          color: #2563eb;
+          padding: 8px 12px;
+          border-radius: 6px;
+        }
+        .sidebar a:hover {
+          background: #e0e7ff;
+          color: #1e40af;
+        }
+        .main {
+          width: 100%;
+          flex: 1 1 auto;
+        }
+        .content {
+          flex-direction: column;
+        }
+        .list {
+          width: 100%;
+          max-height: 250px;
+          border-right: none;
+          border-bottom: 1px solid #ddd;
+        }
+        .details {
+          padding: 15px;
+        }
+      }
+      @media (max-width: 480px) {
+        .tabs {
+          flex-wrap: wrap;
+        }
+        .tabs button {
+          flex: 1 1 100%;
+          text-align: center;
+          border-bottom: none;
+          border-left: 3px solid transparent;
+          margin-bottom: 6px;
+          padding: 12px;
+        }
+        .tabs button.active {
+          border-bottom: none;
+          border-left: 3px solid #2563eb;
+          color: #2563eb;
+        }
+        .count-badge {
+          margin-left: 5px;
+        }
+        .details-card {
+          padding: 15px;
+        }
+        .status-btns {
+          flex-direction: column;
+        }
+        .status-btns button {
+          width: 100%;
+          margin: 6px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Resin Admin</h2>
+      <a href="dashboard.html">Dashboard</a>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="all">
+          All Queries <span id="allCount" class="count-badge">0</span>
+        </button>
+        <button class="tab-btn" data-tab="pending">
+          Pending <span id="pendingCount" class="count-badge">0</span>
+        </button>
+        <button class="tab-btn" data-tab="resolved">
+          Resolved <span id="resolvedCount" class="count-badge">0</span>
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Left: List -->
+        <div class="list" id="queryList"></div>
+
+        <!-- Right: Details -->
+        <div class="details" id="details">
+          <div class="details-card">
+            <h3>Select a query</h3>
+            <p>Click on a query from the list to view details.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+    <script>
+      // Firebase Config
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0StbmF9z2kK4WMEOpG9qO9XwlAfd",
+        authDomain: "ecommerce-492b2.firebaseapp.com",
+        databaseURL: "https://resinecomsite-b81db-default-rtdb.firebaseio.com/",
+        projectId: "ecommerce-492b2",
+        storageBucket: "ecommerce-492b2.appspot.com",
+        messagingSenderId: "973139470429",
+        appId: "1:973139470429:web:0c1915e57edfd72e6b0cb1",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+
+      const queryList = document.getElementById("queryList");
+      const details = document.getElementById("details");
+      let currentTab = "all";
+      let messages = {};
+
+      // Load messages
+      db.ref("messages").on("value", (snapshot) => {
+        messages = snapshot.val() || {};
+        renderList();
+        updateCounts();
+      });
+
+      // Render List based on Tab
+      function renderList() {
+        queryList.innerHTML = "";
+        Object.entries(messages).forEach(([id, msg]) => {
+          if (currentTab === "pending" && msg.status !== "Pending") return;
+          if (currentTab === "resolved" && msg.status !== "Resolved") return;
+
+          const div = document.createElement("div");
+          div.className = "list-item";
+          div.innerHTML = `
+          <div class="list-left">
+            <span class="name">${msg.name}</span>
+            <span class="time">${msg.timestamp || ""}</span>
+            ${
+              msg.resolvedAt
+                ? `<span class="time">Resolved: ${msg.resolvedAt}</span>`
+                : ""
+            }
+          </div>
+          <span class="badge ${
+            msg.status === "Resolved" ? "resolved" : "pending"
+          }">${msg.status || "Pending"}</span>
+        `;
+          div.onclick = (event) => showDetails(id, msg, event);
+          queryList.appendChild(div);
+        });
+      }
+
+      // Show Details
+      function showDetails(id, msg, event) {
+        Array.from(queryList.children).forEach((child) =>
+          child.classList.remove("active")
+        );
+        event.currentTarget.classList.add("active");
+
+        details.innerHTML = `
+        <div class="details-card">
+          <h3>${msg.name}</h3>
+          <p><strong>Email:</strong> ${msg.email}</p>
+          <p><strong>Message:</strong> ${msg.message}</p>
+          <p><strong>Status:</strong> ${msg.status || "Pending"}</p>
+          <p><strong>Created At:</strong> ${msg.timestamp || ""}</p>
+          ${
+            msg.resolvedAt
+              ? `<p><strong>Resolved At:</strong> ${msg.resolvedAt}</p>`
+              : ""
+          }
+          <div class="status-btns">
+            <button class="pending-btn" onclick="updateStatus('${id}', 'Pending')">Mark Pending</button>
+            <button class="resolved-btn" onclick="updateStatus('${id}', 'Resolved')">Mark Resolved</button>
+          </div>
+        </div>
+      `;
+      }
+
+      // Update Status
+      function updateStatus(id, status) {
+        const updates = { status };
+        if (status === "Resolved") {
+          updates.resolvedAt = new Date().toLocaleString("en-IN", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+          });
+        }
+        db.ref("messages/" + id).update(updates);
+      }
+
+      // Update Counts
+      function updateCounts() {
+        let all = 0,
+          pending = 0,
+          resolved = 0;
+        Object.values(messages).forEach((msg) => {
+          all++;
+          if (msg.status === "Resolved") resolved++;
+          else pending++;
+        });
+        document.getElementById("allCount").innerText = all;
+        document.getElementById("pendingCount").innerText = pending;
+        document.getElementById("resolvedCount").innerText = resolved;
+      }
+
+      // Tab Switch
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentTab = btn.dataset.tab;
+          renderList();
+          details.innerHTML = `
+          <div class="details-card">
+            <h3>Select a query</h3>
+            <p>Click on a query from the list to view details.</p>
+          </div>
+        `;
+        });
+      });
+    </script>
+  </body>
+</html>
