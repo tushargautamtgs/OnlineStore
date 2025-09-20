@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Chat Panel</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <style>
+        /* To Be Code  */
+    </style>
+</head>
+<body>
+
+<!-- Top Navbar -->
+<div class="navbar">
+    <div>🛠 Admin Chat Panel</div>
+    <a href="test.html">Dashboard</a>
+</div>
+
+<!-- Session Sidebar -->
+<div class="sessions">
+    <div class="accordion" id="activeAccordion">
+        <div class="accordion-header" onclick="toggleAccordion('activeAccordion')">
+            🟢 Active Chats
+            <span>▼</span>
+        </div>
+        <div class="accordion-content" id="activeSessions"></div>
+    </div>
+
+    <div class="accordion" id="closedAccordion">
+        <div class="accordion-header" onclick="toggleAccordion('closedAccordion')">
+            🔴 Closed Chats
+            <span>▼</span>
+        </div>
+        <div class="accordion-content" id="closedSessions"></div>
+    </div>
+</div>
+
+<!-- Chatbox -->
+<div class="chatbox">
+    <div class="messages" id="chatMessages"></div>
+    <div class="input-box">
+        <input type="text" id="replyInput" placeholder="Type a reply..." oninput="checkInput()" />
+        <button id="sendBtn" onclick="sendReply()" disabled>Send</button>
+    </div>
+</div>
+
+<script>
+    // To be Code
+</script>
+
+
+</body>
+</html>
